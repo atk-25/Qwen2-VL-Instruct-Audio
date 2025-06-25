@@ -20,10 +20,10 @@ def arg_parser():
 
     attn_implementation = "flash_attention_2" if is_flash_attn_2_available() else "sdpa"
 
-    parser.add_argument("--qwen2_vl_model_id", type=str, default="Qwen/Qwen2-VL-7B-Instruct")
+    parser.add_argument("--qwen2_vl_model_id", type=str, default="Qwen/Qwen2-VL-2B-Instruct")
     parser.add_argument("--attn_implementation", type=str, default=attn_implementation)
     parser.add_argument("--save_local", action="store_true")
-    parser.add_argument("--output_dir", type=str, default="Qwen2-VL-7B-Instruct-Audio")
+    parser.add_argument("--output_dir", type=str, default="Qwen2-VL-2B-Instruct-Audio")
     parser.add_argument("--push_to_hub", action="store_true")
     parser.add_argument("--create_new_repo", action="store_true")
     parser.add_argument("--push_to_hub_repo_id", type=str, default=None)
