@@ -259,5 +259,6 @@ if __name__ == "__main__":
     wer = evaluate_model_wer(model, processor, device, eval_dataset=test_dataset,
                              eval_batch_size=args.per_device_eval_batch_size, max_new_tokens=args.max_new_tokens)
     logger.info(f"WER score, over eval_dataset:   {wer:.2f} (%)")
+    print(f"WER score, over eval_dataset:   {wer:.2f} (%)")
 
     clear_memory()
