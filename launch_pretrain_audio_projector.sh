@@ -1,7 +1,7 @@
 #!/bin/bash
 
 python pretrain_audio_projector.py \
-    --model_id "model_id" \
+    --model_id "<model_id>" \
     --attn_implementation "flash_attention_2" \
     --save_local \
     --push_to_hub \
