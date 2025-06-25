@@ -1,5 +1,3 @@
-# TASK: Load the Qwen2VL checkpoint into your model, load whisper turbo, save and push to your repo -  Now, the model and tokenizer should both be there.
-
 import os
 import argparse
 import logging
