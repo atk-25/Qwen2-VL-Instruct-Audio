@@ -82,7 +82,7 @@ Focus on delivering accurate, succinct answers based on the audio information. A
 
 def create_conversation_template_for_training(example):
 
-    audio = example["wav"]
+    audio = example["wav"]["bytes"]
     text = example["text"]
     prompt = "Transcribe this audio."
     assistant_response = f"{text}"
