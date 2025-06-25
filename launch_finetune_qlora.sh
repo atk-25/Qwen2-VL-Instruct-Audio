@@ -1,0 +1,46 @@
+#!/bin/bash
+
+
+
+python finetune_qlora.py \
+    --model_id "atk-25/Qwen2-VL-2B-Instruct-Audio" \
+    --attn_implementation "flash_attention_2" \
+    --save_local \
+    --save_local_adapters \
+    --push_to_hub \
+    --push_to_hub_adapters \
+    --create_new_repo \
+    --create_new_repo_adapters \
+    --push_to_hub_repo_id "atk-25/Qwen2-VL-2B-Instruct-Audio-qlora" \
+    --push_to_hub_repo_id_adapters "atk-25/Qwen2-VL-2B-Instruct-Audio-LoRA-Adapters" \
+    --repos_private \
+    --per_device_train_batch_size 8 \
+    --per_device_eval_batch_size 8 \
+    --gradient_accumulation_steps 2 \
+    --gradient_checkpointing \
+    --max_seq_length 2048 \
+    --num_train_epochs 1 \
+    --max_steps -1 \
+    --learning_rate 2e-4 \
+    --optim "adamw_torch_fused" \
+    --lr_scheduler_type "linear" \
+    --bf16 \
+    --tf32 \
+    --warmup_steps 10 \
+    --weight_decay 0.001 \
+    --logging_steps 5 \
+    --eval_strategy "steps" \
+    --eval_steps 100 \
+    --save_strategy "steps" \
+    --save_steps 200 \
+    --report_to "wandb" \
+    --load_best_model_at_end \
+    --metric_for_best_model "eval_loss" \
+    --output_dir "Qwen2-VL-2B-Instruct-Audio-qlora" \
+    --lora_rank 16 \
+    --lora_alpha 32 \
+    --lora_dropout 0.05 \
+    --lora_bias "none" \
+    --WANDB_PROJECT "Qwen2-VL-2B-Instruct-Audio" \
+    --WANDB_NAME "Qwen2-VL-2B-Instruct-Audio-qlora" \
+    --max_new_tokens 256
