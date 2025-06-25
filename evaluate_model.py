@@ -42,7 +42,7 @@ system_message = """You are a Vision Language and Audio Model specialized in int
 Your task is to transcribe the provided audio signal.
 Focus on delivering accurate, succinct answers based on the audio information. Avoid additional explanation unless absolutely necessary."""
 
-def format_dataset_for_training(example):
+def create_conversation_template_for_training(example):
 
     audio = example["wav"]["bytes"]
     text = example["text"]
@@ -253,7 +253,7 @@ if __name__ == "__main__":
 
     ### get dataset
     test_dataset = get_eval_dataset(args)
-    test_dataset = [format_dataset_for_training(example) for example in test_dataset]
+    test_dataset = [create_conversation_template_for_training(example) for example in test_dataset]
 
     # evaluate model using Word Error Rate (WER) metric
     wer = evaluate_model_wer(model, processor, device, eval_dataset=test_dataset,
