@@ -1,13 +1,11 @@
 #!/bin/bash
 
-
-
 python pretrain_audio_projector.py \
-    --model_id "atk-25/Qwen2-VL-2B-Instruct-Audio" \
+    --model_id "model_id" \
     --attn_implementation "flash_attention_2" \
     --save_local \
     --push_to_hub \
-    --push_to_hub_repo_id "atk-25/Qwen2-VL-2B-Instruct-Audio" \
+    --push_to_hub_repo_id "<repo_id>" \
     --repos_private \
     --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 8 \
