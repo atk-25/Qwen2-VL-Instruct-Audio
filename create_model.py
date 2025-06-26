@@ -45,7 +45,6 @@ def init_weights(module):
 
 
 def clear_memory():
-    # Delete variables if they exist in the current global scope
     if 'model' in globals(): del globals()['model']
     if 'processor' in globals(): del globals()['processor']
     if 'model_whisper' in globals(): del globals()['model_whisper']
@@ -89,7 +88,7 @@ if __name__ == "__main__":
     model.audio.audio_projector.ln.apply(init_weights)
     model.audio.audio_projector.mlp.apply(init_weights)
 
-    # load pretrained weights from Whisper-turbo into the audio encoder
+    # load pretrained weights from whisper-large-v3-turbo into the audio encoder
     model_whisper = WhisperForConditionalGeneration.from_pretrained("openai/whisper-large-v3-turbo",
                                                                     torch_dtype=torch.bfloat16, device_map=device)
     model.audio.audio_encoder.load_state_dict(model_whisper.model.encoder.state_dict())
@@ -97,7 +96,7 @@ if __name__ == "__main__":
     # Save model in local directory
     if args.save_local:
         model.save_pretrained(args.output_dir)
-        logger.info(f"model with randomly initialized audio projector module saved to local directory.")
+        logger.info("model with randomly initialized audio projector module saved to local directory.")
 
     ### create a repository
     if args.create_new_repo:
@@ -105,6 +104,7 @@ if __name__ == "__main__":
         api.create_repo(repo_id=args.push_to_hub_repo_id, private=True)
         logger.info(
             f"New repo created for pushing model with randomly initialized audio projector module, repo_id: {args.push_to_hub_repo_id}")
+        print(f"New repo created for pushing model with randomly initialized audio projector module, repo_id: {args.push_to_hub_repo_id}")
 
     # push processor and model to repo
     if args.push_to_hub:
@@ -112,5 +112,6 @@ if __name__ == "__main__":
         model.push_to_hub(args.push_to_hub_repo_id)
         logger.info(
             f"model with randomly initialized audio projector module and processor pushed to repo_id: {args.push_to_hub_repo_id}")
+        print(f"model with randomly initialized audio projector module and processor pushed to repo_id: {args.push_to_hub_repo_id}")
 
     clear_memory()
