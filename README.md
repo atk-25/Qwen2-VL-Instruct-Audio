@@ -1,3 +1,5 @@
+# Qwen2-VL-Instruct-Audio
+
 ## Introduction
 
 ## Installations:
@@ -20,7 +22,7 @@ pip install .
 pip install flash-attn
 ```
 
-# Setup:
+## Create, train, and evaluate Qwen2-VL-Instruct-Audio models:
 1. Create model: to run create_model.py use the following:
    ```
    python create_model.py \
