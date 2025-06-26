@@ -208,7 +208,6 @@ def evaluate_model_wer(model, processor, device, eval_dataset, eval_batch_size=8
 
 
 def clear_memory():
-    # Delete variables if they exist in the current global scope
     if 'train_dataset' in globals(): del globals()['train_dataset']
     if 'test_dataset' in globals(): del globals()['test_dataset']
     if 'inputs' in globals(): del globals()['inputs']
