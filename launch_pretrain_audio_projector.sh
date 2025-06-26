@@ -29,7 +29,7 @@ python pretrain_audio_projector.py \
     --report_to "wandb" \
     --load_best_model_at_end \
     --metric_for_best_model "eval_loss" \
-    --output_dir "PATH_TO_OUTPUT_DIR" \
+    --output_dir "Qwen2-VL-2B-Instruct-Audio" \
     --WANDB_PROJECT "Qwen2-VL-2B-Instruct-Audio" \
     --WANDB_NAME "Qwen2-VL-2B-Instruct-Audio-pretrain" \
     --max_new_tokens 256
