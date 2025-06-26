@@ -1,11 +1,11 @@
 #!/bin/bash
 
 python pretrain_audio_projector.py \
-    --model_id "<model_id>" \
+    --model_id "<MODEL_ID>" \
     --attn_implementation "flash_attention_2" \
     --save_local \
     --push_to_hub \
-    --push_to_hub_repo_id "<repo_id>" \
+    --push_to_hub_repo_id "<REPO_ID>" \
     --repos_private \
     --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 8 \
@@ -29,7 +29,7 @@ python pretrain_audio_projector.py \
     --report_to "wandb" \
     --load_best_model_at_end \
     --metric_for_best_model "eval_loss" \
-    --output_dir "Qwen2-VL-2B-Instruct-Audio" \
+    --output_dir "PATH_TO_OUTPUT_DIR" \
     --WANDB_PROJECT "Qwen2-VL-2B-Instruct-Audio" \
     --WANDB_NAME "Qwen2-VL-2B-Instruct-Audio-pretrain" \
     --max_new_tokens 256
