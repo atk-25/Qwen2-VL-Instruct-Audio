@@ -1,7 +1,7 @@
 #!/bin/bash
 
 python finetune_qlora.py \
-    --model_id "<model_id>" \
+    --model_id "<MODEL_ID>" \
     --attn_implementation "flash_attention_2" \
     --save_local \
     --save_local_adapters \
@@ -9,8 +9,8 @@ python finetune_qlora.py \
     --push_to_hub_adapters \
     --create_new_repo \
     --create_new_repo_adapters \
-    --push_to_hub_repo_id "<repo_id>" \
-    --push_to_hub_repo_id_adapters "<repo_id_adapters>" \
+    --push_to_hub_repo_id "<REPO_ID>" \
+    --push_to_hub_repo_id_adapters "<REPO_ID_ADAPTERS>" \
     --repos_private \
     --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 8 \
