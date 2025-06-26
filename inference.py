@@ -166,7 +166,6 @@ def run_inference_asr(model, processor, device, examples, inference_batch_size=8
 
 
 def clear_memory():
-    # Delete variables if they exist in the current global scope
     if 'train_dataset' in globals(): del globals()['train_dataset']
     if 'test_dataset' in globals(): del globals()['test_dataset']
     if 'inputs' in globals(): del globals()['inputs']
