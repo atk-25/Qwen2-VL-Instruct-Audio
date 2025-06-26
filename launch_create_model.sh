@@ -7,4 +7,4 @@ python create_model.py \
     --output_dir "Qwen2-VL-2B-Instruct-Audio" \
     --push_to_hub \
     --create_new_repo \
-    --push_to_hub_repo_id "<repo_id>"
+    --push_to_hub_repo_id "<REPO_ID>"
