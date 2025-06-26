@@ -96,7 +96,7 @@ if __name__ == "__main__":
     # Save model in local directory
     if args.save_local:
         model.save_pretrained(args.output_dir)
-        logger.info("model with randomly initialized audio projector module saved to local directory.")
+        print("model with randomly initialized audio projector module saved to local directory.")
 
     ### create a repository
     if args.create_new_repo:
