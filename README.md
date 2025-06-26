@@ -63,5 +63,4 @@ pip install flash-attn
    ```
 8. run inference:
    ```
-   
    ```
