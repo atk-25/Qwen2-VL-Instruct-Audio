@@ -158,7 +158,6 @@ def get_model_and_processor_qlora(args):
     bnb_nf4_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_use_double_quant=True,
-        # nested quantization: enables a second quantization to save some additional bits (by quantizing the quantization constants)
         bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.bfloat16
     )
@@ -184,8 +183,7 @@ def get_model_and_processor_qlora(args):
     lora_config = LoraConfig(
         r=args.lora_rank,
         lora_alpha=args.lora_alpha,
-        # attach adapters to attention layers of the Language model and audio encoder & linear layers of audio projector
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "audio_projector.mlp.0", "audio_projector.mlp.2"],
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "audio_projector.mlp.0", "audio_projector.mlp.2"],   # attach adapters to attention layers of the Language model and audio encoder & linear layers of audio projector
         lora_dropout=args.lora_dropout,  # dropout probability for Lora layers
         bias=args.lora_bias,
         task_type="CAUSAL_LM"
@@ -203,11 +201,10 @@ def collate_fn(examples):
     audios = [process_audio_info(example)[0][0] for example in examples]
     _, audio_sampling_rate = process_audio_info(examples[0])
 
-    # Get batch inputs to LLM by tokenizing the texts and processing the audios
     batch = processor(text=texts, audios=audios, audio_sampling_rate=audio_sampling_rate, return_tensors="pt",
                       padding=True)  # a list of dictionaries with these keys ['input_ids', 'attention_mask', 'audio_features']
 
-    # Get the labels to the input_ids
+    # Get the labels
     labels = batch["input_ids"].clone()
     # Mask the padding tokens
     labels[labels == processor.tokenizer.pad_token_id] = -100  # pad_token_id = 151643
@@ -281,11 +278,11 @@ def finetune_qlora(model, processor, train_dataset, eval_dataset, args):
         processing_class = processor,
     )
 
-    logger.info("Training Started.")
+    print("Training Started.")
 
     trainer.train()
 
-    logger.info("Training completed.")
+    print("Training completed.")
 
 
 def run_inference_asr(model, processor, device, examples, inference_batch_size=8, max_new_tokens=256, return_references=False):
@@ -349,7 +346,6 @@ def evaluate_model_wer(model, processor, device, eval_dataset, eval_batch_size=8
 
 
 def clear_memory():
-    # Delete variables if they exist in the current global scope
     if 'train_dataset' in globals(): del globals()['train_dataset']
     if 'test_dataset' in globals(): del globals()['test_dataset']
     if 'inputs' in globals(): del globals()['inputs']
@@ -419,6 +415,7 @@ if __name__ == "__main__":
     wer = evaluate_model_wer(model, processor, device, eval_dataset=test_dataset,
                              eval_batch_size=args.per_device_eval_batch_size, max_new_tokens=args.max_new_tokens)
     logger.info(f"WER score, over eval_dataset:   {wer:.2f} (%)")
+    print(f"WER score, over eval_dataset:   {wer:.2f} (%)")
 
     ### save adapters
     if args.save_local_adapters:
@@ -440,16 +437,18 @@ if __name__ == "__main__":
     # Save merged model
     if args.save_local:
         model.save_pretrained(args.output_dir + "-merged")
-        logger.info(f"merged qlora model saved to local directory.")
+        print(f"merged qlora model saved to local directory.")
 
     if args.create_new_repo:
         api = HfApi()
         api.create_repo(repo_id=args.push_to_hub_repo_id, private=True)
         logger.info(f"New repo created for pushing merged qlora model, repo_id: {args.push_to_hub_repo_id}")
+        print(f"New repo created for pushing merged qlora model, repo_id: {args.push_to_hub_repo_id}")
 
     if args.push_to_hub:
         processor.push_to_hub(args.push_to_hub_repo_id)
         model.push_to_hub(args.push_to_hub_repo_id)
         logger.info(f"merged qlora model and processor pushed to repo_id: {args.push_to_hub_repo_id}")
+        print(f"merged qlora model and processor pushed to repo_id: {args.push_to_hub_repo_id}")
 
     clear_memory()
