@@ -63,4 +63,5 @@ pip install flash-attn
    ```
 8. run inference:
    ```
+   bash launch_inference.sh
    ```
